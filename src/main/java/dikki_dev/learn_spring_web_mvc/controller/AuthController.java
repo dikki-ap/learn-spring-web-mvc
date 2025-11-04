@@ -1,7 +1,10 @@
 package dikki_dev.learn_spring_web_mvc.controller;
 
+import dikki_dev.learn_spring_web_mvc.model.User;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +25,14 @@ public class AuthController {
     public ResponseEntity<String> login(
             @RequestParam(name = "username") String username,
             @RequestParam(name = "password") String password,
-            HttpServletResponse response // Tambahkan ini untuk membaca cookie
+            HttpServletRequest request, // Tambahkan ini untuk membaca Session
+            HttpServletResponse response // Tambahkan ini untuk membaca Cookie
     ){
         if(username.equals("Dikki") && password.equals("123")){
+            // Membuat sebuah Session ketika login sukses
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user", new User(username));
+
             // Membuat sebuah Cookie ketika login sukses
             Cookie cookie = new Cookie("username", username);
             cookie.setPath("/");
