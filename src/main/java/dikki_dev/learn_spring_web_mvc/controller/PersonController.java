@@ -4,10 +4,7 @@ import dikki_dev.learn_spring_web_mvc.model.CreatePersonRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PersonController {
@@ -26,5 +23,14 @@ public class PersonController {
                 .append(request.getAddress().getCountry()).append(" ")
                 .append(request.getAddress().getProvince()).append(" ")
                 .toString();
+    }
+
+    @PostMapping(
+            path = "/api/create/person",
+            consumes = MediaType.APPLICATION_JSON_VALUE, // Requestnya sebagai JSON
+            produces = MediaType.APPLICATION_JSON_VALUE // Return ResponseBody juga JSON)
+    @ResponseBody
+    public CreatePersonRequest createPersonApi(@RequestBody CreatePersonRequest request){
+        return request; // Otomatis akan return sebagai JSON karena sudah terintegrasi Spring dengan Jackson
     }
 }
