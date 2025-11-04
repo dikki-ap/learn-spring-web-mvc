@@ -48,4 +48,21 @@ public class FormControllerTest {
                         content().string(Matchers.containsString("Hello Dikki"))
                 );
     }
+
+
+    @Test
+    void testFormPerson() throws Exception {
+        mockMvc.perform(
+                        post("/form/person")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("name", "Dikki")
+                                .param("birthDate", "2000-10-17")
+                                .param("address", "Cikarang")
+                )
+                .andDo(print()) // Menampilkan hasil response di console saat test berjalan
+                .andExpectAll(
+                        status().isOk(),
+                        content().string(Matchers.containsString("Success create Person with name: Dikki, birthDate: 2000-10-17, address: Cikarang"))
+                );
+    }
 }
