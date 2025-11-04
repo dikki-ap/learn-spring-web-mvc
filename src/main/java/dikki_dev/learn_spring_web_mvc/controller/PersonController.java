@@ -22,6 +22,9 @@ public class PersonController {
                 .append(request.getLastName()).append(" ")
                 .append(request.getEmail()).append(" ")
                 .append(request.getPhone()).append(" ")
+                .append("with address").append(" ")
+                .append(request.getAddress().getCountry()).append(" ")
+                .append(request.getAddress().getProvince()).append(" ")
                 .toString();
     }
 }

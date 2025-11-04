@@ -27,11 +27,13 @@ public class PersonControllerTest {
                                 .param("lastName", "AP")
                                 .param("email", "dikki.ap@gmail.com")
                                 .param("phone", "+62")
+                                .param("address.country", "Indonesia") // Jika nested ModelAttribute gunakan tanda "." untuk menyambung property nestednya
+                                .param("address.province", "Jawa Barat") // Jika nested ModelAttribute gunakan tanda "." untuk menyambung property nestednya
                 )
                 .andDo(print()) // Menampilkan hasil response di console saat test berjalan
                 .andExpectAll(
                         status().isOk(),
-                        content().string(Matchers.containsString("Succcess create person Dikki AP dikki.ap@gmail.com +62"))
+                        content().string(Matchers.containsString("Succcess create person Dikki AP dikki.ap@gmail.com +62 with address Indonesia Jawa Barat"))
                 );
     }
 
