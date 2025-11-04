@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -16,9 +17,10 @@ public class DateController {
 
     // Ketika request "date" masuk sebagai String dengan format "yyyy-MM-dd" ke Converter, akan diubah ke dalam bentuk Date otomatis oleh Spring
     @GetMapping(path = "/date")
-    public void getDate(@RequestParam(name = "date")Date date, HttpServletResponse response) throws IOException{
+    @ResponseBody // Menggunakan @ResponseBody Annotation daripada HttpServletResponse (Mengganti return method Controller sesuai dengan yang kita inginkan)
+    public String getDate(@RequestParam(name = "date")Date date) throws IOException{
 
         // Hanya saja format response Date nya akan ditentukan seperti yang di atas "yyyyMMdd"
-        response.getWriter().println("Date: " + simpleDateFormat.format(date));
+        return "Date: " + simpleDateFormat.format(date); // Langsung return value String
     }
 }
