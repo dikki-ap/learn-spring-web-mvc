@@ -4,7 +4,9 @@ import dikki_dev.learn_spring_web_mvc.model.CreatePersonRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -33,7 +35,12 @@ public class PersonController {
     @ResponseBody
     // Tambahkan "@Valid" dengan kombinasi "@RequestBody" ataupun "@ModelAttribute" untuk otomatis Java Bean Validation
     // Jika validasi gagal otomatis return 400 BAD REQUEST
-    public CreatePersonRequest createPersonApi(@RequestBody @Valid CreatePersonRequest request){
-        return request; // Otomatis akan return sebagai JSON karena sudah terintegrasi Spring dengan Jackson
+    public ResponseEntity<?> createPersonApi(@RequestBody @Valid CreatePersonRequest request, BindingResult bindingResult){
+        // Jika '@Valid' tidak terpenuhi, daripada throws "MethodArgumentNotValidException", kita bisa tambahkan "BindingResult" di param, dan sesuaikan dengan keinginan returnnya
+        if(!bindingResult.getAllErrors().isEmpty()){
+            return ResponseEntity.badRequest().body("Invalid Data");
+        }
+
+        return ResponseEntity.ok(request); // Otomatis akan return sebagai JSON karena sudah terintegrasi Spring dengan Jackson
     }
 }

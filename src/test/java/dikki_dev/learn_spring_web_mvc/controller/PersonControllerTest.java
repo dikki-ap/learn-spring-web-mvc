@@ -96,7 +96,8 @@ public class PersonControllerTest {
                 )
                 .andDo(print()) // Menampilkan hasil response di console saat test berjalan
                 .andExpectAll(
-                        status().isBadRequest() // Pasti akan BAD REQUEST karena validation gagal
+                        status().isBadRequest(), // Pasti akan BAD REQUEST karena validation gagal
+                        content().string(Matchers.containsString("Invalid Data")) // Ambil ResponseBody Messagenya
                 );
     }
 
