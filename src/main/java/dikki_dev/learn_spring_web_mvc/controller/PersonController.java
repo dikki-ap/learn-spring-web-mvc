@@ -28,7 +28,7 @@ public class PersonController {
     @PostMapping(
             path = "/api/create/person",
             consumes = MediaType.APPLICATION_JSON_VALUE, // Requestnya sebagai JSON
-            produces = MediaType.APPLICATION_JSON_VALUE // Return ResponseBody juga JSON)
+            produces = MediaType.APPLICATION_JSON_VALUE) // Return ResponseBody juga JSON)
     @ResponseBody
     public CreatePersonRequest createPersonApi(@RequestBody CreatePersonRequest request){
         return request; // Otomatis akan return sebagai JSON karena sudah terintegrasi Spring dengan Jackson
