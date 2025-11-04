@@ -44,7 +44,7 @@ public class PersonControllerTest {
     }
 
     @Test
-    void testCreatePersonApi() throws Exception {
+    void testCreatePersonApiSuccess() throws Exception {
         CreatePersonRequest request = new CreatePersonRequest();
         request.setFirstName("Dikki");
         request.setLastName("AP");
@@ -69,6 +69,34 @@ public class PersonControllerTest {
                 .andExpectAll(
                         status().isOk(),
                         content().json(jsonRequest) // Baca RequestBody sebagai JSON
+                );
+    }
+
+    @Test
+    void testCreatePersonApiFail() throws Exception {
+        CreatePersonRequest request = new CreatePersonRequest();
+        request.setFirstName(null);
+        request.setLastName("AP");
+        request.setEmail("dikki.ap@gmail.com");
+        request.setPhone("+62");
+
+        CreateAddressRequest addressRequest = new CreateAddressRequest();
+        addressRequest.setCountry("Indonesia");
+        addressRequest.setProvince("Jawa Barat");
+        request.setAddress(addressRequest);
+
+        // Set request sebagai JSON
+        String jsonRequest = objectMapper.writeValueAsString(request);
+
+        mockMvc.perform(
+                        post("/api/create/person")
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(jsonRequest)
+                )
+                .andDo(print()) // Menampilkan hasil response di console saat test berjalan
+                .andExpectAll(
+                        status().isBadRequest() // Pasti akan BAD REQUEST karena validation gagal
                 );
     }
 

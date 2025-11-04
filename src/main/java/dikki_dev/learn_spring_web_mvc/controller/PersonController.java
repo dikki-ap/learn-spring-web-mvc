@@ -1,6 +1,7 @@
 package dikki_dev.learn_spring_web_mvc.controller;
 
 import dikki_dev.learn_spring_web_mvc.model.CreatePersonRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,9 @@ public class PersonController {
             consumes = MediaType.APPLICATION_JSON_VALUE, // Requestnya sebagai JSON
             produces = MediaType.APPLICATION_JSON_VALUE) // Return ResponseBody juga JSON)
     @ResponseBody
-    public CreatePersonRequest createPersonApi(@RequestBody CreatePersonRequest request){
+    // Tambahkan "@Valid" dengan kombinasi "@RequestBody" ataupun "@ModelAttribute" untuk otomatis Java Bean Validation
+    // Jika validasi gagal otomatis return 400 BAD REQUEST
+    public CreatePersonRequest createPersonApi(@RequestBody @Valid CreatePersonRequest request){
         return request; // Otomatis akan return sebagai JSON karena sudah terintegrasi Spring dengan Jackson
     }
 }
