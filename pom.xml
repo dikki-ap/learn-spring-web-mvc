@@ -90,6 +90,16 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+            <!-- Enable Dynamic Agent Loading && XShare off to avoid Error while running Unit Test-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <argLine>-XX:+EnableDynamicAgentLoading -Xshare:off</argLine>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
