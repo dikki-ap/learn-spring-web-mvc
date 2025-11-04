@@ -31,7 +31,8 @@ public class AuthControllerTest {
                 .andDo(print()) // Menampilkan hasil response di console saat test berjalan
                 .andExpectAll(
                         status().isOk(),
-                        content().string(Matchers.containsString("Authenticated"))
+                        content().string(Matchers.containsString("Authenticated")),
+                        cookie().value("username", "Dikki") // Mengecek apakah ada cookie "username" dengan nilai "Dikki"
                 );
     }
 
