@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -35,5 +37,11 @@ public class AuthController {
         }else{
             return new ResponseEntity<>("Unauthorized",HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @GetMapping(path = "/auth/user")
+    // Mengambil nilai Cookie dari Request tanpa HttpServletResponse yaitu menggunakan "@CookieValue('key')" Annotation
+    public ResponseEntity<String> getUser(@CookieValue("username") String username){
+        return new ResponseEntity<>("Hello " + username, HttpStatus.OK);
     }
 }

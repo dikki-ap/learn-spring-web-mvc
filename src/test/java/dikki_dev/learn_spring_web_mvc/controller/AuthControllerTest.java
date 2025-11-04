@@ -1,6 +1,7 @@
 
 package dikki_dev.learn_spring_web_mvc.controller;
 
+import jakarta.servlet.http.Cookie;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,19 @@ public class AuthControllerTest {
                 .andExpectAll(
                         status().isUnauthorized(),
                         content().string(Matchers.containsString("Unauthorized"))
+                );
+    }
+
+    @Test
+    void testGetUser() throws Exception {
+        mockMvc.perform(
+                        get("/auth/user")
+                                .cookie(new Cookie("username", "Dikki"))
+                )
+                .andDo(print())
+                .andExpectAll(
+                        status().isOk(),
+                        content().string(Matchers.containsString("Hello Dikki"))
                 );
     }
 }
