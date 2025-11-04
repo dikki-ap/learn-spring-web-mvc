@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -18,7 +19,9 @@ public class HelloController {
 
     // Akses "http://localhost:yourPort/hello" untuk tes ini
     // Akses http://localhost:9090/hello?name="Dikki" untuk test ini dengan request parameter
-    @RequestMapping(path = "/hello") // Tambahkan "@RequestMapping" Annotation untuk menjadikan method sebagai Endpoint dengan "path" paramnya
+    // Tambahkan "@RequestMapping" Annotation untuk menjadikan method sebagai Endpoint dengan "path" paramnya
+    // Tambahkan "method" dengan "RequestMethod.GET", jika dipanggil menggunakan yang lain akan return 405 Not Allowed
+    @RequestMapping(path = "/hello", method = RequestMethod.GET)
     public void helloWorld(HttpServletRequest request, HttpServletResponse response) throws IOException{
         String name = request.getParameter("name");
 

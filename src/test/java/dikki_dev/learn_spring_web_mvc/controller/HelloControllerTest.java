@@ -12,7 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -58,6 +58,15 @@ public class HelloControllerTest {
                 .andExpectAll(
                         status().isOk(),
                         content().string(Matchers.containsString("Hello Guys"))
+                );
+    }
+
+    @Test
+    void testhelloGuest405NotAllowed() throws Exception {
+        mockMvc.perform(post("/hello"))
+                .andDo(print()) // Menampilkan hasil response di console saat test berjalan
+                .andExpectAll(
+                        status().isMethodNotAllowed()
                 );
     }
 }
