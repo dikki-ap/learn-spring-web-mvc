@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 @Controller // Tambahkan "@Controller" Annotation agar menandai Class ini menjadi Controller (otomatis sudah menjadi BEAN / Component)
@@ -33,4 +35,14 @@ public class HelloController {
 
         response.getWriter().println(responseBody);
     }
+
+    // Jika menggunakan "Template Engine" returnnya tipe "ModelAndView", kemudian pilih nama "view" nya dengan nama "hello" dan kirimkan datanya menggunakan Map<K, V>
+    @GetMapping(path = "/web/hello")
+    public ModelAndView hello(@RequestParam(name = "name", required = false, defaultValue = "Guest") String name) {
+        return new ModelAndView("hello", Map.of(
+                "title", "Belajar View Mustache",
+                "name", name
+        ));
+    }
+
 }

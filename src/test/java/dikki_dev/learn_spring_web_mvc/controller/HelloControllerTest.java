@@ -69,4 +69,27 @@ public class HelloControllerTest {
                         status().isMethodNotAllowed()
                 );
     }
+
+    @Test
+    void testHelloWeb() throws Exception {
+        mockMvc.perform(get("/web/hello")
+                        .queryParam("name", "Dikki"))
+                .andDo(print()) // Menampilkan hasil response di console saat test berjalan
+                .andExpectAll(
+                        status().isOk(),
+                        content().string(Matchers.containsString("Belajar View")),
+                        content().string(Matchers.containsString("Hello Dikki"))
+                );
+    }
+
+    @Test
+    void testHelloGuest() throws Exception {
+        mockMvc.perform(get("/web/hello"))
+                .andDo(print()) // Menampilkan hasil response di console saat test berjalan
+                .andExpectAll(
+                        status().isOk(),
+                        content().string(Matchers.containsString("Belajar View")),
+                        content().string(Matchers.containsString("Hello Guest"))
+                );
+    }
 }
