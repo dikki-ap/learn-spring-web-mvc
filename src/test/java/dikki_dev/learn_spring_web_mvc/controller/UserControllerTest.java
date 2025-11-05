@@ -31,4 +31,15 @@ public class UserControllerTest {
                         content().string(Matchers.containsString("Hello Dikki")) // Mengambil Data Session
                 );
     }
+
+    @Test
+    void testGetUserInvalid() throws Exception {
+        mockMvc.perform(
+                        get("/user/current")
+                )
+                .andDo(print()) // Menampilkan hasil response di console saat test berjalan
+                .andExpectAll(
+                        status().is3xxRedirection()
+                );
+    }
 }
